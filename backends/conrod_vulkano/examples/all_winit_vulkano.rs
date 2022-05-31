@@ -30,6 +30,7 @@ const DEPTH_FORMAT: Format = Format::D16_UNORM;
 const CLEAR_COLOR: [f32; 4] = [0.2, 0.2, 0.2, 1.0];
 fn main() {
     let event_loop = winit::event_loop::EventLoop::new();
+    let mut user_input =("Editable text!".to_string(),"Multiple lines of \neditable text!".to_string());
     let mut window = support::Window::new(WIN_W, WIN_H, "Conrod with vulkno", &event_loop);
     let mut render_target = RenderTarget::new(&window);
     let subpass = vulkano::render_pass::Subpass::from(render_target.render_pass.clone(), 0)
@@ -135,7 +136,7 @@ fn main() {
                 ui_update_needed = false;
 
                 // Instantiate a GUI demonstrating every widget type provided by conrod.
-                conrod_example_shared::gui(&mut ui.set_widgets(), &ids, &mut app);
+                user_input = conrod_example_shared::gui(&mut ui.set_widgets(), &ids, &mut app,  &user_input.0,  &user_input.1);  
 
                 if ui.has_changed() {
                     // If the view has changed at all, request a redraw.
