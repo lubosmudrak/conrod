@@ -574,8 +574,8 @@ fn bind_group_layout(
         binding: 1,
         visibility: wgpu::ShaderStages::FRAGMENT,
         ty: wgpu::BindingType::Sampler {
-            filtering: true,
-            comparison: false,
+            0: wgpu::SamplerBindingType::Filtering {
+            }
         },
         count: None,
     };
@@ -746,6 +746,7 @@ fn render_pipeline(
         depth_stencil: None,
         multisample: multisample_state,
         fragment: Some(fragment_state),
+        multiview: None // note: multiview rendering is not needed for drawing GUI's not meant for virtual reality
     };
     device.create_render_pipeline(&desc)
 }

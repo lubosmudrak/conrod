@@ -3,7 +3,8 @@ name = "conrod_core"
 version = "0.76.1"
 authors = [
     "Mitchell Nordine <mitchell.nordine@gmail.com>",
-    "Sven Nilsen <bvssvni@gmail.com>"
+    "Sven Nilsen <bvssvni@gmail.com>",
+    "Ľuboš Mudrák <lubosmudrak93@gmail.com>"
 ]
 keywords = ["ui", "widgets", "gui", "interface", "graphics"]
 description = "An easy-to-use, 100% Rust, extensible 2D GUI library."
@@ -23,9 +24,9 @@ wasm-bindgen = [ "instant/wasm-bindgen" ]
 [dependencies]
 conrod_derive = { path = "../conrod_derive", version = "0.76" }
 daggy = "0.5"
-fnv = "1.0"
-num = "0.3"
-pistoncore-input = "1.0.0"
-rusttype = { version = "0.8.3", features = ["gpu_cache"] }
-instant = "0.1"
-copypasta = "0.6"
+fnv = "1.0.7"
+num = "0.4"
+pistoncore-input = "1.0.1"
+rusttype = { version = "0.8.3", features = ["gpu_cache"] } # rusttype = "0.9.2" contains breaking changes. Update later
+instant = "0.1.12"
+copypasta = "0.7.1"

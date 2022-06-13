@@ -3,6 +3,7 @@ name = "conrod_wgpu"
 version = "0.76.1"
 authors = [
     "mitchmindtree <mitchell.nordine@gmail.com>",
+    "Ľuboš Mudrák <lubosmudrak93@gmail.com>"
 ]
 keywords = ["ui", "widgets", "gui", "interface", "graphics"]
 description = "A crate to assist with rendering conrod UIs via wgpu."
@@ -15,12 +16,12 @@ edition = "2018"
 
 [dependencies]
 conrod_core = { path = "../../conrod_core", version = "0.76" }
-wgpu = "0.11"
+wgpu = "0.12.0"
 
 [dev-dependencies]
 conrod_example_shared = { path = "../conrod_example_shared", version = "0.76" }
 conrod_winit = { path = "../conrod_winit", version = "0.76" }
 find_folder = "0.3"
-futures = "0.3"
-image = "0.23"
-winit = "0.25"
+futures = "0.3.21"
+image = "0.24.2"
+winit = "0.26.1"
