@@ -1,12 +1,13 @@
-# NOTICE: Original maintainer stepping down
+# NOTICE: Maintenance branch
 
-I'll no longer be maintaining conrod for the reasons discussed
+Original author is no longer maintaining conrod for the reasons discussed
 [here](https://github.com/PistonDevelopers/conrod/issues/1454). If you're
 looking for a similar yet nicer replacement GUI library, I recommend
 [egui](https://crates.io/crates/egui). If you're interested in taking over
 maintenance, please express your interest
 [here](https://github.com/PistonDevelopers/conrod/issues/1454).
 
+This branch is maintained for use in an app called SmallTime. No new features will be introduced, only bugfixes and dependency updates. Using this library is recommended only if you are already using Conrod in one of your projects and if using this version fixes some bugs in your project.
 ---
 
 # Conrod [![Actions Status](https://github.com/pistondevelopers/conrod/workflows/conrod/badge.svg)](https://github.com/pistondevelopers/conrod/actions) [![Crates.io](https://img.shields.io/crates/l/conrod_core.svg)](https://github.com/PistonDevelopers/conrod/blob/master/LICENSE)
