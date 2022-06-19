@@ -527,9 +527,10 @@ impl<'a> Widget for TextEdit<'a> {
                     event::Button::Keyboard(key) => match key {
                         // If `Cursor::Idx`, remove the `char` behind the cursor.
                         // If `Cursor::Selection`, remove the selected text.
+                        //piston_input confuses CTRL and ALT modifier keys. This hack will be used to temporary fix this issue until proper solution is introduced in upstream
                         input::Key::Backspace | input::Key::Delete => {
                             let delete_word =
-                                press.modifiers.contains(input::keyboard::ModifierKey::CTRL);
+                                press.modifiers.contains(input::keyboard::ModifierKey::CTRL) && press.modifiers.contains(input::keyboard::ModifierKey::ALT) == false;
 
                             // Calculate start/end indices of text to remove
                             let (start, end) = match cursor {
@@ -597,7 +598,7 @@ impl<'a> Widget for TextEdit<'a> {
                         | input::Key::Down => {
                             let font = ui.fonts.get(font_id).unwrap();
                             let move_word =
-                                press.modifiers.contains(input::keyboard::ModifierKey::CTRL);
+                            press.modifiers.contains(input::keyboard::ModifierKey::CTRL) && press.modifiers.contains(input::keyboard::ModifierKey::ALT) == false;
                             let select = press
                                 .modifiers
                                 .contains(input::keyboard::ModifierKey::SHIFT);
@@ -688,7 +689,7 @@ impl<'a> Widget for TextEdit<'a> {
 
                         input::Key::A => {
                             // Select all text on Ctrl+a.
-                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) {
+                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) && press.modifiers.contains(input::keyboard::ModifierKey::ALT) == false {
                                 let start = text::cursor::Index { line: 0, char: 0 };
                                 let end = {
                                     let line_infos = state.line_infos.iter().cloned();
@@ -707,7 +708,7 @@ impl<'a> Widget for TextEdit<'a> {
 
                         input::Key::C => {
                             // Copy selected text on Ctrl+c.
-                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) {
+                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) && press.modifiers.contains(input::keyboard::ModifierKey::ALT) == false {
                                 match cursor {
                                     Cursor::Selection { start, end } => {
                                         let mut clipboard: ClipboardContext =
@@ -748,7 +749,7 @@ impl<'a> Widget for TextEdit<'a> {
 
                         input::Key::E => {
                             // move cursor to end.
-                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) {
+                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) && press.modifiers.contains(input::keyboard::ModifierKey::ALT) == false {
                                 let mut line_infos = state.line_infos.iter().cloned();
                                 let line = line_infos.len() - 1;
                                 match line_infos.nth(line) {
@@ -767,7 +768,7 @@ impl<'a> Widget for TextEdit<'a> {
 
                         input::Key::V => {
                             // Paste selected text at the current cursor position on ctrl+v.
-                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) {
+                            if press.modifiers.contains(input::keyboard::ModifierKey::CTRL) && press.modifiers.contains(input::keyboard::ModifierKey::ALT) == false {
                                 let mut clipboard: ClipboardContext =
                                     ClipboardContext::new().unwrap();
                                 let font = ui.fonts.get(font_id).unwrap();
@@ -851,14 +852,14 @@ impl<'a> Widget for TextEdit<'a> {
                     }
                 }
 
-                event::Widget::Text(event::Text { string, modifiers }) => {
-                    if modifiers.contains(input::keyboard::ModifierKey::CTRL)
+                event::Widget::Text(event::Text { string, modifiers }) => { //DEBUG: check if correct modifier key is applied
+                    println!("value of text string for update: {}", string.to_owned());
+                    if (modifiers.contains(input::keyboard::ModifierKey::CTRL) && modifiers.contains(input::keyboard::ModifierKey::ALT) == false )
                         || string.chars().count() == 0
                         || string.chars().next().is_none()
                     {
                         continue 'events;
                     }
-
                     // Ignore text produced by arrow keys.
                     //
                     // TODO: These just happened to be the modifiers for the arrows on OS X, I've
