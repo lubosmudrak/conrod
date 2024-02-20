@@ -1015,6 +1015,14 @@ impl<'a> Widget for TextEdit<'a> {
                             let distance = cursor_rect.top() - parent_rect.top();
                             ui.scroll_widget(parent_id, [0.0, -distance]);
                         }
+                        if cursor_rect.left() < parent_rect.left(){
+                            let distance = cursor_rect.left() - parent_rect.left();
+                            ui.scroll_widget(parent_id, [-distance, 0.0]);
+                        } 
+                        if cursor_rect.right() > parent_rect.right(){
+                            let distance = cursor_rect.right() - parent_rect.right();
+                            ui.scroll_widget(parent_id, [-distance, 0.0]);
+                        }
                     }
                 }
             }
