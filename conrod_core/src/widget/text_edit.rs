@@ -852,8 +852,7 @@ impl<'a> Widget for TextEdit<'a> {
                     }
                 }
 
-                event::Widget::Text(event::Text { string, modifiers }) => { //DEBUG: check if correct modifier key is applied
-                    println!("value of text string for update: {}", string.to_owned());
+                event::Widget::Text(event::Text { string, modifiers }) => {
                     if (modifiers.contains(input::keyboard::ModifierKey::CTRL) && modifiers.contains(input::keyboard::ModifierKey::ALT) == false )
                         || string.chars().count() == 0
                         || string.chars().next().is_none()
@@ -895,11 +894,14 @@ impl<'a> Widget for TextEdit<'a> {
                             let abs_xy = utils::vec2_add(drag_event.to, rect.xy());
                             let infos = &state.line_infos;
                             let font = ui.fonts.get(font_id).unwrap();
+
                             match closest_cursor_index_and_xy(abs_xy, &text, infos, font) {
                                 Some((end_cursor_idx, _)) => {
-                                    cursor = Cursor::Selection {
-                                        start: start_cursor_idx,
-                                        end: end_cursor_idx,
+                                    if start_cursor_idx != end_cursor_idx {
+                                        cursor = Cursor::Selection {
+                                            start: start_cursor_idx,
+                                            end: end_cursor_idx,
+                                        }
                                     }
                                 }
                                 _ => (),
