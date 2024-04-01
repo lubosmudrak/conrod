@@ -145,7 +145,7 @@ impl<'a> Widget for TextBox<'a> {
 
         let text_rect = {
             let w = rect.x.pad(border + text_padding).len();
-            let h = font_size as Scalar + 1.0;
+            let h = rect.h();
             let x = Range::new(0.0, w).align_middle_of(rect.x);
             let y = Range::new(0.0, h).align_middle_of(rect.y);
             Rect { x: x, y: y }
@@ -168,6 +168,7 @@ impl<'a> Widget for TextBox<'a> {
         let font_id = style.font_id(&ui.theme).or(ui.fonts.ids().next());
         if let Some(new_string) = widget::TextEdit::new(text)
             .and_then(font_id, widget::TextEdit::font_id)
+            .align_text_y_middle()
             .wh(text_rect.dim())
             .xy(text_rect.xy())
             .font_size(font_size)
